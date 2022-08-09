@@ -1,0 +1,14 @@
+#%RAML 1.0 ResourceType
+post:
+  body:
+    application/json:
+      type: postIncidentsRequest
+      example: !include ../examples/requests/postIncidents.json
+  responses:
+    201:
+      body:
+        application/json:
+          type: postIncidentsResponse
+          example: !include ../examples/responses/postIncidents.json
+is:
+              - clientCredentials   

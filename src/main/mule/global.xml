@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	
+	
+	<http:request-config name="OSVCHTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="fa499cba-1b6a-4252-914f-cffe82a4a6d8" basePath="${osvc.basePath}" >
+		<http:request-connection host="${osvc.host}" port="${osvc.port}" >
+			<http:authentication >
+				<http:basic-authentication username="${osvc.basic.username}" password="${osvc.basic.password}" />
+			</http:authentication>
+		</http:request-connection>
+	</http:request-config>
+	
+	
+	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="7918dea1-1233-4f2c-83e5-9061b4e04eaf" flowRef="sa1001-osvc-v1-main" />
+	    <http:listener-config name="sa1001-osvc-v1-httpListenerConfig">
+        <http:listener-connection host="${http.listener.host}" port="${http.listener.port}" />
+    </http:listener-config>
+    <apikit:config name="sa1001-osvc-v1-config" api="sa1001-osvc-v1.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+	<configuration-properties doc:name="Configuration properties" doc:id="f6838898-b89a-47bd-9cf4-b2edb2a15e52" file="properties\mule-${env}.properties" />
+	<configuration-properties doc:name="Configuration properties" doc:id="1c46805f-e526-4d96-9031-8b0d8d796d60" file="properties\mule-common.properties" />
+	
+</mule>

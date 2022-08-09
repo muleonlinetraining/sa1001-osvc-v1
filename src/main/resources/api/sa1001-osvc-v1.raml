@@ -1,0 +1,32 @@
+#%RAML 1.0
+title: SA1001-osvc-v1
+version: v1
+protocols:
+  - HTTP
+  - HTTPS
+description: SYstem api for OSVC SYstem to manage the data related to organizations
+# created by amarnadh on 07-06-2022 Post /Organizations
+# modified by amarnadh on 15-06-2022 added POST /incidents
+mediaType: 
+- application/json
+
+types:
+  postOrganizationRequest: !include libraries/dataTypes/postOrganizationsRequest.raml
+  postOrganizationResponse: !include libraries/dataTypes/postOrganizationsResponse.raml
+  postIncidentsRequest: !include libraries/dataTypes/postIncidentsRequest.raml
+  postIncidentsResponse: !include libraries/dataTypes/postIncidentsResponse.raml
+
+traits:
+  clientCredentials: !include libraries/traits/clientCredentials.raml
+
+resourceTypes:
+  organizationResourceType: !include libraries/patterns/organizations.raml
+  incidentsResourceType: !include libraries/patterns/incidents.raml
+
+/organizations:
+ type:
+   organizationResourceType
+
+/incidents:
+  type:
+    incidentsResourceType

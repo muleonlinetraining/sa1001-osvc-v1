@@ -1,0 +1,21 @@
+{
+	"aceOrgId": 2026930,
+	"name": "University of Colorado at Denv",
+	"customFieldname": "University of Colorado at Denv",
+	"aceLegacyId": 1869572,
+	"erpAcctNo": "1787432",
+	"acctStatus": "Active",
+	"building": "University of Colorado at Denv",
+	"timeZone": "America/Denver",
+	"nationalAccount": true,
+	"idReq": false,
+	"address1": "1380 LAWRENCE ST",
+	"address2": "",
+	"address3": "",
+	"city": "DENVER",
+	"state": "CO",
+	"postalCode": "80204-0000",
+	"country": "US",
+	"billTo": true,
+	"shipTo": true
+}

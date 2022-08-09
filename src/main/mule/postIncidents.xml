@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="postIncidentsSubFlow" doc:id="309439cd-cf69-4833-9f33-daa7a582282d" >
+		<logger level="INFO" doc:name="Info: Flow Start Logger" doc:id="238b71cd-e88b-4e30-9fb6-85c0d0ae1617" message="postIncidentsSubFlow Started "/>
+		<logger level="DEBUG" doc:name="Debug: Intial payload Logger" doc:id="88afb58a-95fd-45a7-bf85-a5ee5c99f98c" message="Intial payload is #[payload]"/>
+		<set-variable value="#[payload]" doc:name="Set Variable" doc:id="da169183-67cb-4db1-85ed-58dd7a8ba8ea" variableName="initialPayload"/>
+		<http:request method="POST" doc:name="Osvc Incidents Request" doc:id="86350c00-6703-48a2-97ef-ecac0595be75" config-ref="OSVCHTTP_Request_configuration" path="${osvc.incidents.path}"/>
+		<ee:transform doc:name="Transform Message" doc:id="8b138ba0-0824-4670-9eae-3d2915b9cf26" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message:payload.message,
+	aceOrgId: vars.initialPayload.aceOrgId,
+	aceLegacyId: vars.initialPayload.aceLegacyId,
+	erpAcctNo: vars.initialPayload.erpAcctNo
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="DEBUG" doc:name="Debug: Response logger" doc:id="a3bd8a6f-f9cc-48b2-9522-64afe4ee175f" message="Osvc System API Response is #[payload]" category="com.cignis.sa1001.post.incidents"/>
+		<logger level="INFO" doc:name="Info: Flow End Logger" doc:id="88ff1abc-e846-4e88-8b7f-7cf86cd92e54" message="postIncidentsSubFlow Ended"/>
+	</sub-flow>
+</mule>

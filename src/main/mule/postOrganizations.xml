@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+	<sub-flow name="postOrganizationsSubFlow" doc:id="cd736226-21e7-481b-9a4c-92ffcd0e894f" >
+		<logger level="INFO" doc:name="Info: Flow start Logger" doc:id="2343dd05-bbbf-46bb-bd78-e913343d5ad8" message="TransactionId: #[vars.transactionId] System API postOrganizationsSubFlow started"/>
+		<logger level="DEBUG" doc:name="Debug: Osvc Request Payload Logger" doc:id="8d6899d1-6dcb-45e6-9144-dbaa482a79a4" message="Osvc Request Payload is #[payload]" category="com.cignis.sa1001.post.organizations"/>
+		<http:request method="POST" doc:name="OSVC Organizations Ext API Request" doc:id="a0742cfd-6052-4b6e-b9f1-6fb80155c0f5" config-ref="OSVCHTTP_Request_configuration" path="${osvc.organizations.path}"/>
+		<logger level="DEBUG" doc:name="Debug: OSVC Response Logger" doc:id="0c302290-5779-4fa9-a224-0b1c2f10ac45" message="Response from OSVC System is #[payload]" category="com.cignis.sa1001.post.organizations"/>
+		<ee:transform doc:name="Organizations Response Transform Message" doc:id="b6be1d11-8507-4b55-9be3-a26bde7fca25" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "message": "Organization created successfully"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Info: Floe End Logger" doc:id="3e361ac6-25b1-4ca5-9526-7205202bbd38" message="TransactionId: #[vars.transactionId] System API postOrganizationsSubFlow End logger"/>
+	</sub-flow>
+</mule>

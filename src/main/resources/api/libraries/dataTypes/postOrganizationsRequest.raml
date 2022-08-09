@@ -1,0 +1,39 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  name:
+    type: string
+    required: true
+  sfdcId:
+    type: number
+    required: true
+  acctStatus:
+    type: string
+    required: true
+  timeZone:
+    type: string
+    required: true
+  address1:
+    type: string
+    required: true
+  address2:
+    type: string
+    required: false
+  address3:
+    type: string
+    required: false
+  city:
+    type: string
+    required: true
+  state:
+    type: string
+    required: true
+  postalCode:
+    type: string
+    required: true
+  country:
+    type: string
+    required: true
+  activeContracts:
+    type: boolean
+    required: true
